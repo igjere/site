@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import PageWrapper from '../components/PageWrapper'
+import TopNavigation from '../components/TopNavigation'
 import { usePostsStore } from '../store/posts'
 import { useMemo } from 'react'
 
@@ -14,29 +15,12 @@ const Blog = () => {
 
   return (
     <PageWrapper>
-      <div style={{ 
-        position: 'fixed',
-        top: '2rem',
-        left: '2rem',
-        zIndex: 10
-      }}>
-        <a 
-          href="/"
-          style={{
-            padding: '0.5rem 1rem',
-            background: '#fff',
-            color: '#000',
-            borderRadius: '4px',
-            textDecoration: 'none',
-            fontFamily: 'Beholden-Regular'
-          }}
-        >
-          Home
-        </a>
-      </div>
+      <TopNavigation />
       <div style={{ 
         width: '100%',
-        marginTop: '5rem',
+        marginTop: '6rem',
+        paddingTop: '2rem',
+        padding: '0 2rem',
         color: '#fff'
       }}>
         <h1>Blog</h1>
@@ -47,7 +31,19 @@ const Blog = () => {
               onClick={() => navigate(`/blog/${post.slug}`)}
               style={{ 
                 cursor: 'pointer',
-                marginBottom: '2rem'
+                marginBottom: '2rem',
+                padding: '1rem',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '8px',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.transform = 'translateY(0)'
               }}
             >
               <h2>{post.title}</h2>

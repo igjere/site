@@ -4,6 +4,7 @@ import PageWrapper from '../components/PageWrapper'
 import Latex from 'react-latex-next'
 import 'katex/dist/katex.min.css'
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer'
+import TopNavigation from '../components/TopNavigation'
 
 // Register Times New Roman font
 Font.register({
@@ -105,59 +106,15 @@ const ResumePDF = () => (
 const Resume = () => {
   return (
     <PageWrapper>
-      <div style={{ 
-        width: '100%',
-        padding: '2rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 10
-      }}>
-        {/* Home Button */}
-        <a 
-          href="/"
-          style={{
-            padding: '0.5rem 1rem',
-            background: '#fff',
-            color: '#000',
-            borderRadius: '4px',
-            textDecoration: 'none',
-            fontFamily: 'Beholden-Regular'
-          }}
-        >
-          Home
-        </a>
-
-        {/* PDF Download Button */}
-        <PDFDownloadLink 
-          document={<ResumePDF />} 
-          fileName="resume.pdf"
-          style={{
-            padding: '0.5rem 1rem',
-            background: '#fff',
-            color: '#000',
-            borderRadius: '4px',
-            textDecoration: 'none',
-            fontFamily: 'Times New Roman, serif'
-          }}
-        >
-          {({ loading }) => loading ? 'Loading...' : 'Download PDF'}
-        </PDFDownloadLink>
-      </div>
-
-      {/* Resume Preview */}
-      <div style={{ 
+      <TopNavigation />
+      <div className="resume-content" style={{ 
         maxWidth: '850px',
-        margin: '6rem auto 2rem',
+        margin: '7rem auto 2rem',
         padding: '3rem',
         background: '#fff',
         borderRadius: '8px',
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        color: '#000',
-        fontFamily: 'Times New Roman, serif'
+        color: '#000'
       }}>
         <h1 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>John Doe</h1>
         <p style={{ textAlign: 'center', marginBottom: '0.5rem' }}>Software Engineer</p>

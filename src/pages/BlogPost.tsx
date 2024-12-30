@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import PageWrapper from '../components/PageWrapper'
+import TopNavigation from '../components/TopNavigation'
 import { usePostsStore } from '../store/posts'
 import MarkdownContent from '../components/MarkdownContent'
 
@@ -13,33 +14,22 @@ const BlogPost = () => {
 
   return (
     <PageWrapper>
-      <div style={{ 
-        position: 'fixed',
-        top: '2rem',
-        left: '2rem',
-        zIndex: 10
-      }}>
-        <a 
-          href="/"
-          style={{
-            padding: '0.5rem 1rem',
-            background: '#fff',
-            color: '#000',
-            borderRadius: '4px',
-            textDecoration: 'none',
-            fontFamily: 'Beholden-Regular'
-          }}
-        >
-          Home
-        </a>
-      </div>
+      <TopNavigation />
       <div style={{ 
         width: '100%',
-        marginTop: '5rem',
+        maxWidth: '900px',
+        margin: '0 auto',
+        marginTop: '6rem',
+        paddingTop: '2rem',
+        padding: '2rem',
         color: '#fff'
       }}>
         <h1>{post.title}</h1>
-        <p style={{ fontStyle: 'italic' }}>
+        <p style={{ 
+          fontStyle: 'italic',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          paddingBottom: '1rem'
+        }}>
           Created: {post.createdAt.toLocaleString()}
           {post.modifiedAt > post.createdAt && 
             ` (Modified: ${post.modifiedAt.toLocaleString()})`}

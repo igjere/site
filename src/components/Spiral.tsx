@@ -2,7 +2,12 @@ import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { BufferGeometry, Float32BufferAttribute } from 'three'
 
-const Spiral = () => {
+interface SpiralProps {
+  scale?: number
+  position?: [number, number, number]
+}
+
+const Spiral = ({ scale = 1, position = [0, 0, 0] }: SpiralProps) => {
   const pointsRef = useRef<any>(null)
   
   const { positions, sizes } = useMemo(() => {
@@ -118,7 +123,7 @@ const Spiral = () => {
   })
 
   return (
-    <points ref={pointsRef}>
+    <points ref={pointsRef} position={position} scale={scale}>
       <primitive object={geometry} />
       <pointsMaterial
         size={0.15}

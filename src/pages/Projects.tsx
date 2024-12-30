@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import PageWrapper from '../components/PageWrapper'
+import TopNavigation from '../components/TopNavigation'
 import { usePostsStore } from '../store/posts'
 import { useMemo } from 'react'
 
@@ -14,26 +15,7 @@ const Projects = () => {
 
   return (
     <PageWrapper>
-      <div style={{ 
-        position: 'fixed',
-        top: '2rem',
-        left: '2rem',
-        zIndex: 10
-      }}>
-        <a 
-          href="/"
-          style={{
-            padding: '0.5rem 1rem',
-            background: '#fff',
-            color: '#000',
-            borderRadius: '4px',
-            textDecoration: 'none',
-            fontFamily: 'Beholden-Regular'
-          }}
-        >
-          Home
-        </a>
-      </div>
+      <TopNavigation />
       <div style={{ 
         width: '100%',
         marginTop: '5rem',

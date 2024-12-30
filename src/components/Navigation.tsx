@@ -1,5 +1,6 @@
 import { Text } from '@react-three/drei'
 import { useNavigate } from 'react-router-dom'
+import { ThreeEvent } from '@react-three/fiber'
 
 interface NavigationProps {
   viewportWidth: number
@@ -16,21 +17,14 @@ const Navigation = ({ viewportWidth, viewportHeight, positionY }: NavigationProp
     { text: 'RESUME', path: '/resume' }
   ]
 
-  const handlePointerOver = (e: THREE.Event) => {
+  const handlePointerEnter = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
-    if (e.nativeEvent instanceof PointerEvent) {
-      document.body.style.cursor = 'pointer'
-      // Use modern pointer event properties
-      const pressure = (e.nativeEvent as PointerEvent).pressure
-      const pointerType = (e.nativeEvent as PointerEvent).pointerType
-    }
+    document.body.style.cursor = 'pointer'
   }
 
-  const handlePointerOut = (e: THREE.Event) => {
+  const handlePointerOut = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
-    if (e.nativeEvent instanceof PointerEvent) {
-      document.body.style.cursor = 'auto'
-    }
+    document.body.style.cursor = 'auto'
   }
 
   // Calculate responsive sizes - slightly larger
@@ -48,7 +42,7 @@ const Navigation = ({ viewportWidth, viewportHeight, positionY }: NavigationProp
             key={index} 
             position={[xPos, 0, 0]}
             onClick={() => navigate(item.path)}
-            onPointerOver={handlePointerOver}
+            onPointerOver={handlePointerEnter}
             onPointerOut={handlePointerOut}
           >
             <mesh>

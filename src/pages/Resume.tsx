@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { Canvas } from '@react-three/fiber'
 import PageWrapper from '../components/PageWrapper'
 import Latex from 'react-latex-next'
 import 'katex/dist/katex.min.css'
@@ -149,7 +147,7 @@ const Resume = () => {
               transition: 'all 0.3s ease'
             }}
           >
-            {({ loading }) => loading ? 'Loading...' : 'Download PDF'}
+            Download PDF
           </PDFDownloadLink>
         </div>
 

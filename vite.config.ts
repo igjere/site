@@ -24,8 +24,27 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['three', '@react-three/fiber', '@react-three/drei'],
+          pdf: ['@react-pdf/renderer'],
+          markdown: ['react-markdown', 'rehype-raw', 'rehype-sanitize']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000,
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
   },
   publicDir: 'public',
   assetsInclude: ['**/*.ttf'],
   base: '/',
+  optimizeDeps: {
+    exclude: ['three-stdlib']
+  }
 })

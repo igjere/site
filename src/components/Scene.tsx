@@ -1,4 +1,4 @@
-import { Vector3, CatmullRomCurve3 } from 'three'
+import { Vector3 } from 'three'
 import { useThree } from '@react-three/fiber'
 import Spiral from './Spiral'
 import Navigation from './Navigation'

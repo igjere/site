@@ -20,7 +20,6 @@ const TopNavigation = () => {
   }, [])
 
   // Determine if we're in a post page and what type
-  const isPostPage = /\/(blog|projects)\/[^/]+$/.test(path)
   const postType = path.includes('/blog/') ? 'blog' : 
                   path.includes('/projects/') ? 'projects' : null
 

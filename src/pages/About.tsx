@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom'
 import PageWrapper from '../components/PageWrapper'
 import TopNavigation from '../components/TopNavigation'
 import { useScrollReset } from '../hooks/useScrollReset'

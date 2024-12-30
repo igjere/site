@@ -1,54 +1,32 @@
-import { useState, useRef } from 'react'
 import { Text } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
-import { Vector3, CatmullRomCurve3 } from 'three'
-import { useNavigate } from 'react-router-dom'
+import { useRef } from 'react'
 
 interface FloatingTextProps {
   text: string
-  position: Vector3
+  position: [number, number, number]
   size: number
-  curve: CatmullRomCurve3
+  curve?: any // Remove if not used
 }
 
-const FloatingText = ({ text, position, size, curve }: FloatingTextProps) => {
-  const navigate = useNavigate()
-  const textRef = useRef<any>(null)
-  const [hover, setHover] = useState(false)
-  const basePosition = position.clone()
-  
-  useFrame(({ camera, clock }) => {
-    if (textRef.current) {
-      const time = clock.getElapsedTime()
-      textRef.current.position.x = basePosition.x + Math.sin(time * 0.5) * 0.5
-      textRef.current.position.y = basePosition.y + Math.cos(time * 0.3) * 0.5
-      textRef.current.position.z = basePosition.z
-      
-      textRef.current.lookAt(camera.position)
-      textRef.current.rotation.z = 0
-    }
-  })
+const FloatingText = ({ text, position, size }: FloatingTextProps) => {
+  const textRef = useRef<any>()
 
   return (
-    <group renderOrder={0}>
-      <Text
-        ref={textRef}
-        fontSize={size}
-        color={hover ? '#ffffff' : '#cccccc'}
-        anchorX="center"
-        anchorY="middle"
-        font="/fonts/Beholden-Regular.ttf"
-        letterSpacing={-0.05}
-        onPointerOver={() => setHover(true)}
-        onPointerOut={() => setHover(false)}
-        onClick={() => navigate(`/${text.toLowerCase()}`)}
-        renderOrder={0}
-        depthTest={false}
-        depthWrite={false}
-      >
-        {text}
-      </Text>
-    </group>
+    <Text
+      ref={textRef}
+      fontSize={size}
+      color="#ffffff"
+      anchorX="center"
+      anchorY="middle"
+      font="/fonts/Beholden-Regular.ttf"
+      letterSpacing={0.1}
+      onPointerOver={() => {}}
+      onPointerOut={() => {}}
+      position={position}
+      renderOrder={1}
+    >
+      {text}
+    </Text>
   )
 }
 

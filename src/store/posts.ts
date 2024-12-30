@@ -7,6 +7,13 @@ interface PostsStore {
   getRecentPosts: () => Post[]
 }
 
+interface PostFile {
+  default: {
+    frontmatter: Record<string, any>
+    content: string
+  }
+}
+
 // Import all markdown files
 const blogFiles = import.meta.glob('../content/blog/*.md')
 const projectFiles = import.meta.glob('../content/projects/*.md')
@@ -17,26 +24,30 @@ const loadPosts = async () => {
   
   // Load blog posts
   for (const path in blogFiles) {
-    const file = await blogFiles[path]()
+    const file = await blogFiles[path]() as PostFile
     const { frontmatter, content } = file.default
+    if (!frontmatter.id || !frontmatter.title || !frontmatter.type || !frontmatter.slug) {
+      console.warn('Missing required fields in frontmatter:', path)
+      continue
+    }
     posts.push({
       ...frontmatter,
       content,
       createdAt: new Date(frontmatter.createdAt),
       modifiedAt: new Date(frontmatter.modifiedAt)
-    })
+    } as Post)
   }
 
   // Load project posts
   for (const path in projectFiles) {
-    const file = await projectFiles[path]()
+    const file = await projectFiles[path]() as PostFile
     const { frontmatter, content } = file.default
     posts.push({
       ...frontmatter,
       content,
       createdAt: new Date(frontmatter.createdAt),
       modifiedAt: new Date(frontmatter.modifiedAt)
-    })
+    } as Post)
   }
 
   return posts

@@ -13,7 +13,7 @@ const Navigation = ({ viewportWidth, viewportHeight, positionY }: NavigationProp
     { text: 'PROJECTS', path: '/projects' },
     { text: 'ABOUT', path: '/about' },
     { text: 'BLOG', path: '/blog' },
-    { text: 'CONTACT', path: '/contact' }
+    { text: 'RESUME', path: '/resume' }
   ]
 
   const handlePointerOver = (e: THREE.Event) => {

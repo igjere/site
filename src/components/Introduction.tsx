@@ -21,7 +21,7 @@ const Introduction = ({ viewportWidth, positionY }: IntroductionProps) => {
         anchorX="left"
         lineHeight={1.5}
       >
-        This is a test introduction text. Here you can write about your site, your work, or anything else you'd like visitors to know.
+        This is test introduction text. Here will be written about the site, work, or anything else.
       </Text>
     </group>
   )

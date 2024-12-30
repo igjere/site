@@ -7,7 +7,7 @@ import Loading from './components/Loading'
 // Lazy load other pages to improve performance
 const About = lazy(() => import('./pages/About'))
 const Projects = lazy(() => import('./pages/Projects'))
-const Contact = lazy(() => import('./pages/Contact'))
+const Resume = lazy(() => import('./pages/Resume'))
 const Blog = lazy(() => import('./pages/Blog'))
 const BlogPost = lazy(() => import('./pages/BlogPost'))
 const ProjectPost = lazy(() => import('./pages/ProjectPost'))
@@ -60,7 +60,7 @@ function App() {
             <Routes>
               <Route path="about" element={<About />} />
               <Route path="projects" element={<Projects />} />
-              <Route path="contact" element={<Contact />} />
+              <Route path="resume" element={<Resume />} />
               <Route path="blog" element={<Blog />} />
               <Route path="blog/:slug" element={<BlogPost />} />
               <Route path="projects/:slug" element={<ProjectPost />} />

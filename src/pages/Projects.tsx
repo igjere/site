@@ -14,25 +14,51 @@ const Projects = () => {
 
   return (
     <PageWrapper>
-      <h1>Projects</h1>
-      <div style={{ marginTop: '2rem' }}>
-        {projectPosts.map(post => (
-          <div 
-            key={post.id}
-            onClick={() => navigate(`/projects/${post.slug}`)}
-            style={{ 
-              cursor: 'pointer',
-              marginBottom: '2rem'
-            }}
-          >
-            <h2>{post.title}</h2>
-            <p style={{ fontStyle: 'italic' }}>
-              Created: {new Date(post.createdAt).toLocaleString()}
-              {post.modifiedAt > post.createdAt && 
-                ` (Modified: ${new Date(post.modifiedAt).toLocaleString()})`}
-            </p>
-          </div>
-        ))}
+      <div style={{ 
+        position: 'fixed',
+        top: '2rem',
+        left: '2rem',
+        zIndex: 10
+      }}>
+        <a 
+          href="/"
+          style={{
+            padding: '0.5rem 1rem',
+            background: '#fff',
+            color: '#000',
+            borderRadius: '4px',
+            textDecoration: 'none',
+            fontFamily: 'Beholden-Regular'
+          }}
+        >
+          Home
+        </a>
+      </div>
+      <div style={{ 
+        width: '100%',
+        marginTop: '5rem',
+        color: '#fff'
+      }}>
+        <h1>Projects</h1>
+        <div style={{ marginTop: '2rem' }}>
+          {projectPosts.map(post => (
+            <div 
+              key={post.id}
+              onClick={() => navigate(`/projects/${post.slug}`)}
+              style={{ 
+                cursor: 'pointer',
+                marginBottom: '2rem'
+              }}
+            >
+              <h2>{post.title}</h2>
+              <p style={{ fontStyle: 'italic' }}>
+                Created: {new Date(post.createdAt).toLocaleString()}
+                {post.modifiedAt > post.createdAt && 
+                  ` (Modified: ${new Date(post.modifiedAt).toLocaleString()})`}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </PageWrapper>
   )

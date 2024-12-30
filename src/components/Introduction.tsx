@@ -21,7 +21,9 @@ const Introduction = ({ viewportWidth, positionY }: IntroductionProps) => {
         anchorX="left"
         lineHeight={1.5}
       >
-        This is test introduction text. Here will be written about the site, work, or anything else.
+        {`lockedinCEO.
+attempting to save the public perception of gen z software engineers one git commit at a time. 
+interested in ai, web development, game development, embedded systems, and anything to get cracked. currently studying rust.`}
       </Text>
     </group>
   )

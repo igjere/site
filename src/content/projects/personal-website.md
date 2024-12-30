@@ -7,54 +7,9 @@ modifiedAt: '2024-12-28T21:39:00'
 slug: 'personal-website'
 ---
 
-# Personal Website
+## The website you're on now
 
-A 3D personal website built with modern web technologies, featuring an interactive homepage and content management system.
+### Development Process
+Created over the course of 2 days, I was primarily focused on getting back into the swing of things while also making an original project. I have spent the last few months studying various technologies and looking for a job, and have not been able to work on anything I personally enjoy. I hope this effort kickstarts my habit of building while also reigniting my passion for active software development.
 
-## Technologies Used
-&nbsp;&nbsp;• React
-
-&nbsp;&nbsp;• Three.js / React Three Fiber
-
-&nbsp;&nbsp;• TypeScript
-
-&nbsp;&nbsp;• Vite
-
-&nbsp;&nbsp;• Zustand
-
-&nbsp;&nbsp;• React Router
-
-&nbsp;&nbsp;• Markdown Content Management
-
-## Features
-&nbsp;&nbsp;• Interactive 3D homepage with dynamic elements
-
-&nbsp;&nbsp;• Responsive design that adapts to different screen sizes
-
-&nbsp;&nbsp;• Blog and project showcase system
-
-&nbsp;&nbsp;• Markdown-based content management
-
-&nbsp;&nbsp;• Dynamic routing and lazy loading for optimal performance
-
-&nbsp;&nbsp;• Custom 3D components including:
-
-&nbsp;&nbsp;&nbsp;&nbsp;• Animated spiral background
-
-&nbsp;&nbsp;&nbsp;&nbsp;• Interactive navigation
-
-&nbsp;&nbsp;&nbsp;&nbsp;• Recent posts display
-
-&nbsp;&nbsp;&nbsp;&nbsp;• Floating text elements
-
-## Development Process
-This project was built to showcase my work while experimenting with 3D web technologies. The combination of Three.js and React allows for creating immersive web experiences while maintaining good performance and code organization.
-
-## Future Improvements
-&nbsp;&nbsp;• Add animations for page transitions
-
-&nbsp;&nbsp;• Implement dark/light theme switching
-
-&nbsp;&nbsp;• Add more interactive 3D elements
-
-&nbsp;&nbsp;• Create a custom markdown editor for content management
+I have more ideas for this website, but will be shifting focus to other projects in the meantime to update the pages with.

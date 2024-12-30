@@ -24,30 +24,20 @@ const About = () => {
           paddingBottom: '1rem',
           marginBottom: '2rem'
         }}>
-          Welcome to my personal website
+          Welcome
         </div>
         <div style={{ 
           width: '100%',
           maxWidth: '100%'
         }}>
-          <p style={{ marginBottom: '1rem' }}>
-            Hello! I'm a software developer passionate about creating innovative solutions 
-            and exploring new technologies. My journey in software development started with 
-            a curiosity about how things work and has evolved into a professional career 
-            building web applications and interactive experiences.
+          <p style={{ marginBottom: '1rem', fontStyle: 'italic' }}>
+            "I'm still working while you dream."
           </p>
-          
           <p style={{ marginBottom: '1rem' }}>
-            I specialize in frontend development with React and TypeScript, but I'm also 
-            experienced with backend technologies and 3D graphics programming. This website 
-            is a showcase of my work and a platform where I share my thoughts about 
-            technology and development.
+            Hello, I'm on the eternal quest to get cracked. I will be updating this page with more information in the near future.
           </p>
-
-          <p>
-            When I'm not coding, you can find me exploring new technologies, contributing 
-            to open-source projects, or working on personal projects that push the 
-            boundaries of web development.
+          <p style={{ marginBottom: '1rem' }}>
+            All you need to know about me is that I've built my life by myself brick by brick. I am very prideful about the quality of my work, and stubborn to be the best at it. I'm also very passionate about the gym and reading.
           </p>
         </div>
       </div>

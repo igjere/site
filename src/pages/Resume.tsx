@@ -7,6 +7,32 @@ import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Font } from '@
 import TopNavigation from '../components/TopNavigation'
 import { useScrollReset } from '../hooks/useScrollReset'
 
+// Resume Data
+const resumeData = {
+  name: "John Doe",
+  role: "Test content for when I feel like updating this page",
+  email: "john.doe@email.com",
+  education: {
+    degree: "B.S. in Computer Science",
+    school: "University of Example",
+    years: "2021-2024",
+    gpa: "3.97/4.00"
+  },
+  workExperience: {
+    title: "Software Engineer",
+    company: "Example Corp",
+    period: "2022-Present",
+    bullets: [
+      "",
+      ""
+    ]
+  },
+  technicalSkills: {
+    languages: "",
+    frameworks: ""
+  }
+}
+
 // Register Times New Roman font
 Font.register({
   family: 'Times New Roman',
@@ -58,47 +84,37 @@ const styles = StyleSheet.create({
   }
 })
 
-// PDF Document Component
+// Updated PDF Component
 const ResumePDF = () => (
   <Document>
     <Page size="A4" style={styles.page}>
-      {/* Header */}
       <View style={styles.section}>
-        <Text style={styles.heading}>John Doe</Text>
-        <Text style={styles.role}>Software Engineer</Text>
-        <Text style={styles.contact}>john.doe@email.com</Text>
+        <Text style={styles.heading}>{resumeData.name}</Text>
+        <Text style={styles.role}>{resumeData.role}</Text>
+        <Text style={styles.contact}>{resumeData.email}</Text>
       </View>
 
-      {/* Education */}
       <View style={styles.section}>
         <Text style={styles.subheading}>Education</Text>
-        <Text style={styles.text}>B.S. in Computer Science</Text>
-        <Text style={styles.text}>University of Example, 2018-2022</Text>
-        <Text style={styles.text}>GPA: 3.95/4.00</Text>
+        <Text style={styles.text}>{resumeData.education.degree}</Text>
+        <Text style={styles.text}>{`${resumeData.education.school}, ${resumeData.education.years}`}</Text>
+        <Text style={styles.text}>{`GPA: ${resumeData.education.gpa}`}</Text>
       </View>
 
-      {/* Technical Skills */}
-      <View style={styles.section}>
-        <Text style={styles.subheading}>Technical Skills</Text>
-        <Text style={styles.text}>Languages: Python, JavaScript/TypeScript, C++</Text>
-        <Text style={styles.text}>Frameworks: React, Three.js, Node.js</Text>
-      </View>
-
-      {/* Work Experience */}
       <View style={styles.section}>
         <Text style={styles.subheading}>Work Experience</Text>
-        <Text style={styles.text}>Software Engineer - Example Corp (2022-Present)</Text>
+        <Text style={styles.text}>{`${resumeData.workExperience.title} - ${resumeData.workExperience.company} (${resumeData.workExperience.period})`}</Text>
         <View style={styles.list}>
-          <Text style={styles.listItem}>• Developed n microservices using Node.js and TypeScript</Text>
-          <Text style={styles.listItem}>• Improved system performance by O(n log n)</Text>
+          {resumeData.workExperience.bullets.map((bullet, index) => (
+            <Text key={index} style={styles.listItem}>• {bullet}</Text>
+          ))}
         </View>
       </View>
 
-      {/* Publications */}
       <View style={styles.section}>
-        <Text style={styles.subheading}>Publications</Text>
-        <Text style={styles.text}>"Advanced Algorithms in Practice"</Text>
-        <Text style={styles.text}>IEEE Conference (2023)</Text>
+        <Text style={styles.subheading}>Technical Skills</Text>
+        <Text style={styles.text}>{`Languages: ${resumeData.technicalSkills.languages}`}</Text>
+        <Text style={styles.text}>{`Frameworks: ${resumeData.technicalSkills.frameworks}`}</Text>
       </View>
     </Page>
   </Document>
@@ -144,34 +160,30 @@ const Resume = () => {
           color: '#000',
           padding: '3rem'
         }}>
-          <h1 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>John Doe</h1>
-          <p style={{ textAlign: 'center', marginBottom: '0.5rem' }}>Software Engineer</p>
-          <p style={{ textAlign: 'center', marginBottom: '2rem' }}>john.doe@email.com</p>
-
-          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', marginBottom: '1rem' }}>Education</h2>
-          <Latex>{'$\\text{B.S. in Computer Science}$'}</Latex>
-          <p>University of Example, 2018-2022</p>
-          <Latex>{'$\\text{GPA: } 3.95/4.00$'}</Latex>
-
-          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Technical Skills</h2>
-          <Latex>{'$\\text{Languages: }$ Python, JavaScript/TypeScript, C++'}</Latex>
-          <br />
-          <Latex>{'$\\text{Frameworks: }$ React, Three.js, Node.js'}</Latex>
+          <h1 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>{resumeData.name}</h1>
+          <p style={{ textAlign: 'center', marginBottom: '0.5rem' }}>{resumeData.role}</p>
+          <p style={{ textAlign: 'center', marginBottom: '2rem' }}>{resumeData.email}</p>
 
           <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Work Experience</h2>
-          <h3>Software Engineer</h3>
-          <Latex>{'$\\text{Example Corp } (2022-Present)$'}</Latex>
+          <h3>{resumeData.workExperience.title}</h3>
+          <Latex>{`$\\text{${resumeData.workExperience.company} } (${resumeData.workExperience.period})$`}</Latex>
           <ul style={{ marginLeft: '2rem' }}>
-            <li>
-              <Latex>{'Developed $n$ microservices using Node.js and TypeScript'}</Latex>
-            </li>
-            <li>
-              <Latex>{'Improved system performance by $O(n\\log n)$'}</Latex>
-            </li>
+            {resumeData.workExperience.bullets.map((bullet, index) => (
+              <li key={index}>
+                <Latex>{`$\\text{${bullet}}$`}</Latex>
+              </li>
+            ))}
           </ul>
 
-          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Publications</h2>
-          <Latex>{'$\\text{``Advanced Algorithms in Practice"} \\\\ \\text{IEEE Conference (2023)}$'}</Latex>
+          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', marginBottom: '1rem' }}>Education</h2>
+          <Latex>{`$\\text{${resumeData.education.degree}}$`}</Latex>
+          <p>{`${resumeData.education.school}, ${resumeData.education.years}`}</p>
+          <Latex>{`$\\text{GPA: } ${resumeData.education.gpa}$`}</Latex>
+
+          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Technical Skills</h2>
+          <Latex>{`$\\text{Languages: }$ ${resumeData.technicalSkills.languages}`}</Latex>
+          <br />
+          <Latex>{`$\\text{Frameworks: }$ ${resumeData.technicalSkills.frameworks}`}</Latex>
         </div>
       </div>
     </PageWrapper>

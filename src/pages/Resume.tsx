@@ -5,6 +5,7 @@ import Latex from 'react-latex-next'
 import 'katex/dist/katex.min.css'
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer'
 import TopNavigation from '../components/TopNavigation'
+import { useScrollReset } from '../hooks/useScrollReset'
 
 // Register Times New Roman font
 Font.register({
@@ -104,46 +105,74 @@ const ResumePDF = () => (
 )
 
 const Resume = () => {
+  useScrollReset()
   return (
     <PageWrapper>
       <TopNavigation />
-      <div className="resume-content" style={{ 
-        maxWidth: '850px',
-        margin: '7rem auto 2rem',
-        padding: '3rem',
-        background: '#fff',
-        borderRadius: '8px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-        color: '#000'
+      <div style={{ 
+        width: '100%',
+        maxWidth: '900px',
+        margin: '0 auto',
+        marginTop: '6rem',
+        paddingTop: '2rem',
+        padding: '0 2rem',
+        color: '#fff'
       }}>
-        <h1 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>John Doe</h1>
-        <p style={{ textAlign: 'center', marginBottom: '0.5rem' }}>Software Engineer</p>
-        <p style={{ textAlign: 'center', marginBottom: '2rem' }}>john.doe@email.com</p>
+        <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Resume</h1>
+        
+        <div style={{ textAlign: 'right', marginBottom: '2rem' }}>
+          <PDFDownloadLink
+            document={<ResumePDF />}
+            fileName="resume.pdf"
+            style={{
+              padding: '0.5rem 1rem',
+              background: '#fff',
+              color: '#000',
+              borderRadius: '4px',
+              textDecoration: 'none',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            {({ loading }) => loading ? 'Loading...' : 'Download PDF'}
+          </PDFDownloadLink>
+        </div>
 
-        <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', marginBottom: '1rem' }}>Education</h2>
-        <Latex>{'$\\text{B.S. in Computer Science}$'}</Latex>
-        <p>University of Example, 2018-2022</p>
-        <Latex>{'$\\text{GPA: } 3.95/4.00$'}</Latex>
+        <div className="resume-content" style={{ 
+          background: '#fff',
+          borderRadius: '8px',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          color: '#000',
+          padding: '3rem'
+        }}>
+          <h1 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>John Doe</h1>
+          <p style={{ textAlign: 'center', marginBottom: '0.5rem' }}>Software Engineer</p>
+          <p style={{ textAlign: 'center', marginBottom: '2rem' }}>john.doe@email.com</p>
 
-        <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Technical Skills</h2>
-        <Latex>{'$\\text{Languages: }$ Python, JavaScript/TypeScript, C++'}</Latex>
-        <br />
-        <Latex>{'$\\text{Frameworks: }$ React, Three.js, Node.js'}</Latex>
+          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', marginBottom: '1rem' }}>Education</h2>
+          <Latex>{'$\\text{B.S. in Computer Science}$'}</Latex>
+          <p>University of Example, 2018-2022</p>
+          <Latex>{'$\\text{GPA: } 3.95/4.00$'}</Latex>
 
-        <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Work Experience</h2>
-        <h3>Software Engineer</h3>
-        <Latex>{'$\\text{Example Corp } (2022-Present)$'}</Latex>
-        <ul style={{ marginLeft: '2rem' }}>
-          <li>
-            <Latex>{'Developed $n$ microservices using Node.js and TypeScript'}</Latex>
-          </li>
-          <li>
-            <Latex>{'Improved system performance by $O(n\\log n)$'}</Latex>
-          </li>
-        </ul>
+          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Technical Skills</h2>
+          <Latex>{'$\\text{Languages: }$ Python, JavaScript/TypeScript, C++'}</Latex>
+          <br />
+          <Latex>{'$\\text{Frameworks: }$ React, Three.js, Node.js'}</Latex>
 
-        <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Publications</h2>
-        <Latex>{'$\\text{``Advanced Algorithms in Practice"} \\\\ \\text{IEEE Conference (2023)}$'}</Latex>
+          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Work Experience</h2>
+          <h3>Software Engineer</h3>
+          <Latex>{'$\\text{Example Corp } (2022-Present)$'}</Latex>
+          <ul style={{ marginLeft: '2rem' }}>
+            <li>
+              <Latex>{'Developed $n$ microservices using Node.js and TypeScript'}</Latex>
+            </li>
+            <li>
+              <Latex>{'Improved system performance by $O(n\\log n)$'}</Latex>
+            </li>
+          </ul>
+
+          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Publications</h2>
+          <Latex>{'$\\text{``Advanced Algorithms in Practice"} \\\\ \\text{IEEE Conference (2023)}$'}</Latex>
+        </div>
       </div>
     </PageWrapper>
   )

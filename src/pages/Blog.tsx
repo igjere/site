@@ -3,8 +3,10 @@ import PageWrapper from '../components/PageWrapper'
 import TopNavigation from '../components/TopNavigation'
 import { usePostsStore } from '../store/posts'
 import { useMemo } from 'react'
+import { useScrollReset } from '../hooks/useScrollReset'
 
 const Blog = () => {
+  useScrollReset()
   const navigate = useNavigate()
   const posts = usePostsStore((state) => state.posts)
   
@@ -18,12 +20,14 @@ const Blog = () => {
       <TopNavigation />
       <div style={{ 
         width: '100%',
+        maxWidth: '900px',
+        margin: '0 auto',
         marginTop: '6rem',
         paddingTop: '2rem',
         padding: '0 2rem',
         color: '#fff'
       }}>
-        <h1>Blog</h1>
+        <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Blog</h1>
         <div style={{ marginTop: '2rem' }}>
           {blogPosts.map(post => (
             <div 

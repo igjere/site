@@ -3,8 +3,10 @@ import PageWrapper from '../components/PageWrapper'
 import TopNavigation from '../components/TopNavigation'
 import { usePostsStore } from '../store/posts'
 import { useMemo } from 'react'
+import { useScrollReset } from '../hooks/useScrollReset'
 
 const Projects = () => {
+  useScrollReset()
   const navigate = useNavigate()
   const posts = usePostsStore((state) => state.posts)
   
@@ -18,10 +20,14 @@ const Projects = () => {
       <TopNavigation />
       <div style={{ 
         width: '100%',
-        marginTop: '5rem',
+        maxWidth: '900px',
+        margin: '0 auto',
+        marginTop: '6rem',
+        paddingTop: '2rem',
+        padding: '0 2rem',
         color: '#fff'
       }}>
-        <h1>Projects</h1>
+        <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Projects</h1>
         <div style={{ marginTop: '2rem' }}>
           {projectPosts.map(post => (
             <div 
@@ -29,7 +35,19 @@ const Projects = () => {
               onClick={() => navigate(`/projects/${post.slug}`)}
               style={{ 
                 cursor: 'pointer',
-                marginBottom: '2rem'
+                marginBottom: '2rem',
+                padding: '1rem',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '8px',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                e.currentTarget.style.transform = 'translateY(0)'
               }}
             >
               <h2>{post.title}</h2>

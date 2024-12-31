@@ -32,6 +32,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Copy redirects
+        run: cp public/_redirects dist/
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
@@ -40,4 +42,4 @@ jobs:
           path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4

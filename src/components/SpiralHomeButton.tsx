@@ -39,7 +39,6 @@ const SpiralHomeButton = ({  }: SpiralHomeButtonProps) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 100,
         zIndex: 11,
         cursor: 'pointer',
         transition: 'all 0.3s ease',

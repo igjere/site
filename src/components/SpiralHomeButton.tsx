@@ -7,7 +7,7 @@ interface SpiralHomeButtonProps {
   isScrolled: boolean
 }
 
-const SpiralHomeButton = ({ isScrolled }: SpiralHomeButtonProps) => {
+const SpiralHomeButton = ({  }: SpiralHomeButtonProps) => {
   const navigate = useNavigate()
   const { isMobile } = useResponsive()
   const [isHovered, setIsHovered] = useState(false)

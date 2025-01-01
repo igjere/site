@@ -9,7 +9,7 @@ const TopNavigation = () => {
   const path = location.pathname
   const [isScrolled, setIsScrolled] = useState(false)
   const { isMobile } = useResponsive()
-  const isHome = path === '/'
+  // const isHome = path === '/'
   
   useEffect(() => {
     const handleScroll = () => {

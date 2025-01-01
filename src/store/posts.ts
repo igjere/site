@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { Post } from '../types/Post'
+import matter from 'gray-matter'
 
 interface PostsStore {
   posts: Post[]
@@ -7,48 +8,52 @@ interface PostsStore {
   getRecentPosts: () => Post[]
 }
 
-// Update glob patterns to use absolute paths
-const blogFiles = import.meta.glob<{
-  default: {
-    frontmatter: Record<string, any>
-    content: string
-  }
-}>('/src/content/blog/*.md', { eager: true })
-const projectFiles = import.meta.glob<{
-  default: {
-    frontmatter: Record<string, any>
-    content: string
-  }
-}>('/src/content/projects/*.md', { eager: true })
+// Update glob patterns to use absolute paths with raw loader
+const blogFiles = import.meta.glob('/src/content/blog/*.md', {
+  eager: true,
+  as: 'raw'
+})
+const projectFiles = import.meta.glob('/src/content/projects/*.md', {
+  eager: true,
+  as: 'raw'
+})
 
 // Function to load and parse posts
 const loadPosts = async () => {
   const posts: Post[] = []
   
   // Process blog posts
-  Object.values(blogFiles).forEach((file) => {
-    const { frontmatter, content } = file.default
-    if (!frontmatter.id || !frontmatter.title || !frontmatter.type || !frontmatter.slug) {
-      console.warn('Missing required fields in frontmatter:', file)
-      return
+  Object.entries(blogFiles).forEach(([path, content]) => {
+    try {
+      const { data: frontmatter, content: markdownContent } = matter(content)
+      if (!frontmatter.id || !frontmatter.title || !frontmatter.type || !frontmatter.slug) {
+        console.warn('Missing required fields in frontmatter:', path)
+        return
+      }
+      posts.push({
+        ...frontmatter,
+        content: markdownContent,
+        createdAt: new Date(frontmatter.createdAt),
+        modifiedAt: new Date(frontmatter.modifiedAt)
+      } as Post)
+    } catch (error) {
+      console.error(`Error processing ${path}:`, error)
     }
-    posts.push({
-      ...frontmatter,
-      content,
-      createdAt: new Date(frontmatter.createdAt),
-      modifiedAt: new Date(frontmatter.modifiedAt)
-    } as Post)
   })
 
   // Process project posts
-  Object.values(projectFiles).forEach((file) => {
-    const { frontmatter, content } = file.default
-    posts.push({
-      ...frontmatter,
-      content,
-      createdAt: new Date(frontmatter.createdAt),
-      modifiedAt: new Date(frontmatter.modifiedAt)
-    } as Post)
+  Object.entries(projectFiles).forEach(([path, content]) => {
+    try {
+      const { data: frontmatter, content: markdownContent } = matter(content)
+      posts.push({
+        ...frontmatter,
+        content: markdownContent,
+        createdAt: new Date(frontmatter.createdAt),
+        modifiedAt: new Date(frontmatter.modifiedAt)
+      } as Post)
+    } catch (error) {
+      console.error(`Error processing ${path}:`, error)
+    }
   })
 
   return posts

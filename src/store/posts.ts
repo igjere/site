@@ -18,6 +18,28 @@ const projectFiles = import.meta.glob('/src/content/projects/*.md', {
   as: 'raw'
 })
 
+// Simple markdown frontmatter parser
+const parseFrontMatter = (content: string) => {
+  const frontMatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/
+  const matches = content.match(frontMatterRegex)
+  
+  if (!matches) return null
+  
+  const frontMatter = matches[1]
+  const markdownContent = matches[2]
+  
+  const metadata: Record<string, any> = {}
+  frontMatter.split('\n').forEach(line => {
+    const [key, ...valueParts] = line.split(':')
+    if (key && valueParts.length) {
+      const value = valueParts.join(':').trim().replace(/^['"](.*)['"]$/, '$1')
+      metadata[key.trim()] = value
+    }
+  })
+  
+  return { frontmatter: metadata, content: markdownContent.trim() }
+}
+
 // Function to load and parse posts
 const loadPosts = async () => {
   const posts: Post[] = []
@@ -25,7 +47,12 @@ const loadPosts = async () => {
   // Process blog posts
   Object.entries(blogFiles).forEach(([path, content]) => {
     try {
-      const { data: frontmatter, content: markdownContent } = matter(content)
+      const parsed = parseFrontMatter(content)
+      if (!parsed) {
+        console.warn('Invalid frontmatter format:', path)
+        return
+      }
+      const { frontmatter, content: markdownContent } = parsed
       if (!frontmatter.id || !frontmatter.title || !frontmatter.type || !frontmatter.slug) {
         console.warn('Missing required fields in frontmatter:', path)
         return
@@ -44,7 +71,12 @@ const loadPosts = async () => {
   // Process project posts
   Object.entries(projectFiles).forEach(([path, content]) => {
     try {
-      const { data: frontmatter, content: markdownContent } = matter(content)
+      const parsed = parseFrontMatter(content)
+      if (!parsed) {
+        console.warn('Invalid frontmatter format:', path)
+        return
+      }
+      const { frontmatter, content: markdownContent } = parsed
       posts.push({
         ...frontmatter,
         content: markdownContent,

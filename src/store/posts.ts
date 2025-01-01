@@ -7,23 +7,26 @@ interface PostsStore {
   getRecentPosts: () => Post[]
 }
 
-interface PostFile {
+// Update glob patterns to use absolute paths
+const blogFiles = import.meta.glob<{
   default: {
     frontmatter: Record<string, any>
     content: string
   }
-}
-
-// Update glob patterns to use absolute paths
-const blogFiles = import.meta.glob('/src/content/blog/*.md', { eager: true })
-const projectFiles = import.meta.glob('/src/content/projects/*.md', { eager: true })
+}>('/src/content/blog/*.md', { eager: true })
+const projectFiles = import.meta.glob<{
+  default: {
+    frontmatter: Record<string, any>
+    content: string
+  }
+}>('/src/content/projects/*.md', { eager: true })
 
 // Function to load and parse posts
 const loadPosts = async () => {
   const posts: Post[] = []
   
   // Process blog posts
-  Object.values(blogFiles).forEach((file: any) => {
+  Object.values(blogFiles).forEach((file) => {
     const { frontmatter, content } = file.default
     if (!frontmatter.id || !frontmatter.title || !frontmatter.type || !frontmatter.slug) {
       console.warn('Missing required fields in frontmatter:', file)
@@ -38,7 +41,7 @@ const loadPosts = async () => {
   })
 
   // Process project posts
-  Object.values(projectFiles).forEach((file: any) => {
+  Object.values(projectFiles).forEach((file) => {
     const { frontmatter, content } = file.default
     posts.push({
       ...frontmatter,

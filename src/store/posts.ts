@@ -14,21 +14,20 @@ interface PostFile {
   }
 }
 
-// Import all markdown files
-const blogFiles = import.meta.glob('../content/blog/*.md')
-const projectFiles = import.meta.glob('../content/projects/*.md')
+// Update glob patterns to use absolute paths
+const blogFiles = import.meta.glob('/src/content/blog/*.md', { eager: true })
+const projectFiles = import.meta.glob('/src/content/projects/*.md', { eager: true })
 
 // Function to load and parse posts
 const loadPosts = async () => {
   const posts: Post[] = []
   
-  // Load blog posts
-  for (const path in blogFiles) {
-    const file = await blogFiles[path]() as PostFile
+  // Process blog posts
+  Object.values(blogFiles).forEach((file: any) => {
     const { frontmatter, content } = file.default
     if (!frontmatter.id || !frontmatter.title || !frontmatter.type || !frontmatter.slug) {
-      console.warn('Missing required fields in frontmatter:', path)
-      continue
+      console.warn('Missing required fields in frontmatter:', file)
+      return
     }
     posts.push({
       ...frontmatter,
@@ -36,11 +35,10 @@ const loadPosts = async () => {
       createdAt: new Date(frontmatter.createdAt),
       modifiedAt: new Date(frontmatter.modifiedAt)
     } as Post)
-  }
+  })
 
-  // Load project posts
-  for (const path in projectFiles) {
-    const file = await projectFiles[path]() as PostFile
+  // Process project posts
+  Object.values(projectFiles).forEach((file: any) => {
     const { frontmatter, content } = file.default
     posts.push({
       ...frontmatter,
@@ -48,7 +46,7 @@ const loadPosts = async () => {
       createdAt: new Date(frontmatter.createdAt),
       modifiedAt: new Date(frontmatter.modifiedAt)
     } as Post)
-  }
+  })
 
   return posts
 }

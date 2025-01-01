@@ -40,15 +40,15 @@ const NewestBar = ({ position, viewportWidth, isMobile }: NewestBarProps) => {
 
   const fontSize = isMobile 
     ? Math.min(viewportWidth * 0.04, 2.2)
-    : Math.min(viewportWidth * 0.025, 1.6)
+    : Math.min(viewportWidth * 0.015, 1.2)
     
   const barWidth = isMobile
     ? Math.min(viewportWidth * 0.9, 130)
-    : Math.min(viewportWidth * 0.8, 125)
+    : Math.min(viewportWidth * 0.85, 140)
     
   const blackPlaneHeight = isMobile 
     ? recentPosts.length * 3 + 6
-    : recentPosts.length * 2.5 + 6
+    : recentPosts.length * 3 + 8
 
   return (
     <group position={position}>
@@ -61,7 +61,7 @@ const NewestBar = ({ position, viewportWidth, isMobile }: NewestBarProps) => {
       {/* NEW POSTS text */}
       <Text
         position={[-barWidth/2 + 2, 0, 0]}
-        fontSize={fontSize * 1.3}
+        fontSize={fontSize}
         color="#ffffff"
         font="/fonts/Beholden-Regular.ttf"
         anchorX="left"
@@ -71,11 +71,17 @@ const NewestBar = ({ position, viewportWidth, isMobile }: NewestBarProps) => {
       </Text>
 
       {recentPosts.map((post, index) => (
-        <group key={post.id} position={[0, -(isMobile ? 3 : 2.5) * (index + 1), 0]}>
+        <group 
+          key={post.id} 
+          position={[0, -(isMobile ? 3 : 2.5) * (index + 1), 0]}
+          onClick={() => handleClick(post.type, post.slug)}
+          onPointerOver={handlePointerEnter}
+          onPointerOut={handlePointerOut}
+        >
           {/* Post title with larger spacing for mobile */}
           <group position={[-barWidth/2 + 2, 0, 0]}>
             <Text
-              fontSize={fontSize}
+              fontSize={fontSize * (isMobile ? 0.85 : 0.85)}
               color="#ffffff"
               font="/fonts/Beholden-Regular.ttf"
               anchorX="left"
@@ -89,7 +95,7 @@ const NewestBar = ({ position, viewportWidth, isMobile }: NewestBarProps) => {
           <group>
             <Text
               position={[barWidth/2 - 2, 0, 0]}
-              fontSize={fontSize * 0.8}
+              fontSize={fontSize * (isMobile ? 0.8 : 0.65)}
               color="#999999"
               font="/fonts/Beholden-Italic.ttf"
               anchorX="right"

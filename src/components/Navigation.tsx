@@ -35,7 +35,7 @@ const Navigation = ({ viewportWidth, viewportHeight, positionY, isMobile }: Navi
     
   const buttonHeight = isMobile
     ? Math.min(viewportHeight * 0.05, 3)
-    : Math.min(viewportHeight * 0.07, 3)
+    : Math.min(viewportHeight * 0.08, 4)
     
   const spacing = isMobile 
     ? buttonWidth * 1.15
@@ -43,7 +43,7 @@ const Navigation = ({ viewportWidth, viewportHeight, positionY, isMobile }: Navi
   
   const fontSize = isMobile
     ? Math.min(viewportWidth * 0.035, 1.8)
-    : Math.min(viewportWidth * 0.017, 1.3)
+    : Math.min(viewportWidth * 0.02, 1.4)
 
   // Adjust vertical position based on viewport height
   const adjustedPositionY = positionY - (isMobile ? 2 : 1.5)

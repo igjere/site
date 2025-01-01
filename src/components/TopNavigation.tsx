@@ -61,9 +61,7 @@ const TopNavigation = () => {
         overflow: 'auto',
         msOverflowStyle: 'none',
         scrollbarWidth: 'none',
-        '&::-webkit-scrollbar': {
-          display: 'none'
-        }
+        WebkitOverflowScrolling: 'touch'
       }}>
         {navItems.map((item) => {
           const isActive = postType ? 

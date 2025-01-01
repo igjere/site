@@ -12,8 +12,8 @@ const Introduction = ({ viewportWidth, positionY, isMobile }: IntroductionProps)
     : Math.min(viewportWidth * 0.8, 125)
   
   const fontSize = isMobile
-    ? Math.min(viewportWidth * 0.05, 2.6)
-    : Math.min(viewportWidth * 0.025, 2.0)
+    ? Math.min(viewportWidth * 0.04, 2)
+    : Math.min(viewportWidth * 0.015, 1.2)
     
   const xPosition = -maxWidth / 2
 

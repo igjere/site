@@ -17,7 +17,7 @@ const SpiralCanvas = ({ width = 56, height = 56, scale = 0.15 }: SpiralCanvasPro
         alpha: true,
       }}
     >
-      <ambientLight intensity={1.5} />
+      <ambientLight intensity={5.0} />
       <Spiral scale={scale} />
     </Canvas>
   )

@@ -4,11 +4,13 @@ import TopNavigation from '../components/TopNavigation'
 import { usePostsStore } from '../store/posts'
 import { useMemo } from 'react'
 import { useScrollReset } from '../hooks/useScrollReset'
+import { useResponsive } from '../hooks/useResponsive'
 
 const Blog = () => {
   useScrollReset()
   const navigate = useNavigate()
   const posts = usePostsStore((state) => state.posts)
+  const { isMobile } = useResponsive()
   
   const blogPosts = useMemo(() => 
     posts.filter(post => post.type === 'blog')
@@ -20,15 +22,24 @@ const Blog = () => {
       <TopNavigation />
       <div style={{ 
         width: '100%',
-        maxWidth: '900px',
+        maxWidth: isMobile ? 'calc(100% - 2rem)' : '800px',
         margin: '0 auto',
-        marginTop: '6rem',
-        paddingTop: '2rem',
-        padding: '0 2rem',
-        color: '#fff'
+        marginTop: isMobile ? '4rem' : '5rem',
+        padding: isMobile ? '1rem' : '2rem',
+        color: '#fff',
+        overflowX: 'hidden'
       }}>
-        <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Blog</h1>
-        <div style={{ marginTop: '2rem' }}>
+        <h1 style={{ 
+          textAlign: 'center', 
+          marginBottom: '2rem',
+          fontSize: isMobile ? '1.5rem' : '2rem' 
+        }}>Blog</h1>
+        <div style={{ 
+          marginTop: '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem'
+        }}>
           {blogPosts.map(post => (
             <div 
               key={post.id}

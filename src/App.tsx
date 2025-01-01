@@ -14,6 +14,15 @@ const ProjectPost = lazy(() => import('./pages/ProjectPost'))
 
 function App() {
   useEffect(() => {
+    // Set initial viewport height for mobile
+    const setVH = () => {
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    }
+    
+    setVH()
+    window.addEventListener('resize', setVH)
+    
     // Suppress deprecated mouse event warnings
     const suppressDeprecation = (e: Event) => {
       if (e instanceof MouseEvent && e.type === 'mousemove') {
@@ -22,14 +31,22 @@ function App() {
     }
     
     window.addEventListener('mousemove', suppressDeprecation, true)
-    return () => window.removeEventListener('mousemove', suppressDeprecation, true)
+    return () => {
+      window.removeEventListener('resize', setVH)
+      window.removeEventListener('mousemove', suppressDeprecation, true)
+    }
   }, [])
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={
-          <div style={{ width: '100vw', height: '100vh', background: '#000' }}>
+          <div style={{ 
+            width: '100vw', 
+            height: 'calc(var(--vh, 1vh) * 100)', 
+            background: '#000',
+            overflow: 'hidden'
+          }}>
             <Canvas
               camera={{ 
                 position: [0, 0, 30],

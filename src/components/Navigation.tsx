@@ -6,9 +6,10 @@ interface NavigationProps {
   viewportWidth: number
   viewportHeight: number
   positionY: number
+  isMobile: boolean
 }
 
-const Navigation = ({ viewportWidth, viewportHeight, positionY }: NavigationProps) => {
+const Navigation = ({ viewportWidth, viewportHeight, positionY, isMobile }: NavigationProps) => {
   const navigate = useNavigate()
   const navItems = [
     { text: 'PROJECTS', path: '/projects' },
@@ -27,14 +28,28 @@ const Navigation = ({ viewportWidth, viewportHeight, positionY }: NavigationProp
     document.body.style.cursor = 'auto'
   }
 
-  // Calculate responsive sizes - slightly larger
-  const buttonWidth = Math.min(viewportWidth * 0.17, 14)
-  const buttonHeight = Math.min(viewportHeight * 0.09, 3.5)
-  const spacing = buttonWidth * 1.2
-  const fontSize = Math.min(viewportWidth * 0.017, 1.4)
+  // Calculate responsive sizes
+  const buttonWidth = isMobile 
+    ? Math.min(viewportWidth * 0.22, 16)
+    : Math.min(viewportWidth * 0.16, 13)
+    
+  const buttonHeight = isMobile
+    ? Math.min(viewportHeight * 0.05, 3)
+    : Math.min(viewportHeight * 0.07, 3)
+    
+  const spacing = isMobile 
+    ? buttonWidth * 1.15
+    : buttonWidth * 1.3
+  
+  const fontSize = isMobile
+    ? Math.min(viewportWidth * 0.035, 1.8)
+    : Math.min(viewportWidth * 0.017, 1.3)
+
+  // Adjust vertical position based on viewport height
+  const adjustedPositionY = positionY - (isMobile ? 2 : 1.5)
 
   return (
-    <group position={[0, positionY, 0]}>
+    <group position={[0, adjustedPositionY, 0]}>
       {navItems.map((item, index) => {
         const xPos = (index - 1.5) * spacing
         return (

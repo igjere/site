@@ -4,6 +4,7 @@ import 'katex/dist/katex.min.css'
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer'
 import TopNavigation from '../components/TopNavigation'
 import { useScrollReset } from '../hooks/useScrollReset'
+import { useResponsive } from '../hooks/useResponsive'
 
 // Resume Data
 const resumeData = {
@@ -120,21 +121,33 @@ const ResumePDF = () => (
 
 const Resume = () => {
   useScrollReset()
+  const { isMobile } = useResponsive()
+  
   return (
     <PageWrapper>
       <TopNavigation />
       <div style={{ 
         width: '100%',
-        maxWidth: '900px',
+        maxWidth: isMobile ? 'calc(100% - 2rem)' : '800px',
         margin: '0 auto',
-        marginTop: '6rem',
-        paddingTop: '2rem',
-        padding: '0 2rem',
-        color: '#fff'
+        marginTop: isMobile ? '4rem' : '5rem',
+        marginBottom: '2rem',
+        padding: isMobile ? '1rem' : '2rem',
+        color: '#fff',
+        overflowX: 'hidden'
       }}>
-        <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Resume</h1>
-        
-        <div style={{ textAlign: 'right', marginBottom: '2rem' }}>
+        <div style={{ 
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '2rem'
+        }}>
+          <h1 style={{ 
+            textAlign: 'center',
+            margin: 0,
+            fontSize: isMobile ? '1.5rem' : '2rem'
+          }}>Resume</h1>
+          
           <PDFDownloadLink
             document={<ResumePDF />}
             fileName="resume.pdf"
@@ -144,7 +157,8 @@ const Resume = () => {
               color: '#000',
               borderRadius: '4px',
               textDecoration: 'none',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              fontSize: isMobile ? '0.8rem' : '1rem'
             }}
           >
             Download PDF
@@ -156,29 +170,64 @@ const Resume = () => {
           borderRadius: '8px',
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
           color: '#000',
-          padding: '3rem'
+          padding: isMobile ? '1.25rem' : '2.5rem',
+          fontSize: isMobile ? '0.8rem' : '1rem',
+          lineHeight: '1.5'
         }}>
-          <h1 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>{resumeData.name}</h1>
-          <p style={{ textAlign: 'center', marginBottom: '0.5rem' }}>{resumeData.role}</p>
-          <p style={{ textAlign: 'center', marginBottom: '2rem' }}>{resumeData.email}</p>
+          <h1 style={{ 
+            textAlign: 'center', 
+            marginBottom: '0.5rem',
+            fontSize: isMobile ? '1.3rem' : '1.75rem'
+          }}>{resumeData.name}</h1>
+          <p style={{ 
+            textAlign: 'center', 
+            marginBottom: '0.5rem',
+            fontSize: isMobile ? '0.8rem' : '1rem'
+          }}>{resumeData.role}</p>
+          <p style={{ 
+            textAlign: 'center', 
+            marginBottom: '1.5rem',
+            fontSize: isMobile ? '0.8rem' : '1rem'
+          }}>{resumeData.email}</p>
 
-          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Work Experience</h2>
-          <h3>{resumeData.workExperience.title}</h3>
+          <h2 style={{ 
+            borderBottom: '1px solid #000', 
+            paddingBottom: '0.5rem', 
+            margin: '1.5rem 0 1rem',
+            fontSize: isMobile ? '1.1rem' : '1.4rem'
+          }}>Work Experience</h2>
+          <h3 style={{ 
+            fontSize: isMobile ? '0.9rem' : '1.2rem',
+            marginBottom: '0.5rem'
+          }}>{resumeData.workExperience.title}</h3>
           <Latex>{`$\\text{${resumeData.workExperience.company} } (${resumeData.workExperience.period})$`}</Latex>
-          <ul style={{ marginLeft: '2rem' }}>
+          <ul style={{ 
+            marginLeft: '1.5rem',
+            marginTop: '0.5rem'
+          }}>
             {resumeData.workExperience.bullets.map((bullet, index) => (
-              <li key={index}>
+              <li key={index} style={{ marginBottom: '0.3rem' }}>
                 <Latex>{`$\\text{${bullet}}$`}</Latex>
               </li>
             ))}
           </ul>
 
-          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', marginBottom: '1rem' }}>Education</h2>
+          <h2 style={{ 
+            borderBottom: '1px solid #000', 
+            paddingBottom: '0.5rem', 
+            margin: '1.5rem 0 1rem',
+            fontSize: isMobile ? '1.1rem' : '1.4rem'
+          }}>Education</h2>
           <Latex>{`$\\text{${resumeData.education.degree}}$`}</Latex>
-          <p>{`${resumeData.education.school}, ${resumeData.education.years}`}</p>
+          <p style={{ margin: '0.5rem 0' }}>{`${resumeData.education.school}, ${resumeData.education.years}`}</p>
           <Latex>{`$\\text{GPA: } ${resumeData.education.gpa}$`}</Latex>
 
-          <h2 style={{ borderBottom: '1px solid #000', paddingBottom: '0.5rem', margin: '2rem 0 1rem' }}>Technical Skills</h2>
+          <h2 style={{ 
+            borderBottom: '1px solid #000', 
+            paddingBottom: '0.5rem', 
+            margin: '1.5rem 0 1rem',
+            fontSize: isMobile ? '1.1rem' : '1.4rem'
+          }}>Technical Skills</h2>
           <Latex>{`$\\text{Languages: }$ ${resumeData.technicalSkills.languages}`}</Latex>
           <br />
           <Latex>{`$\\text{Frameworks: }$ ${resumeData.technicalSkills.frameworks}`}</Latex>

@@ -8,9 +8,10 @@ import { useEffect } from 'react'
 interface NewestBarProps {
   position: Vector3
   viewportWidth: number
+  isMobile: boolean
 }
 
-const NewestBar = ({ position, viewportWidth }: NewestBarProps) => {
+const NewestBar = ({ position, viewportWidth, isMobile }: NewestBarProps) => {
   const navigate = useNavigate()
   const getRecentPosts = usePostsStore((state) => state.getRecentPosts)
   const recentPosts = getRecentPosts().slice(0, 3)
@@ -37,9 +38,17 @@ const NewestBar = ({ position, viewportWidth }: NewestBarProps) => {
     navigate(`/${path}/${slug}`)
   }
 
-  const fontSize = Math.min(viewportWidth * 0.025, 1.6)
-  const barWidth = Math.min(viewportWidth * 0.8, 125)
-  const blackPlaneHeight = recentPosts.length * 4 + 10
+  const fontSize = isMobile 
+    ? Math.min(viewportWidth * 0.04, 2.2)
+    : Math.min(viewportWidth * 0.025, 1.6)
+    
+  const barWidth = isMobile
+    ? Math.min(viewportWidth * 0.9, 130)
+    : Math.min(viewportWidth * 0.8, 125)
+    
+  const blackPlaneHeight = isMobile 
+    ? recentPosts.length * 3 + 6
+    : recentPosts.length * 2.5 + 6
 
   return (
     <group position={position}>
@@ -52,7 +61,7 @@ const NewestBar = ({ position, viewportWidth }: NewestBarProps) => {
       {/* NEW POSTS text */}
       <Text
         position={[-barWidth/2 + 2, 0, 0]}
-        fontSize={fontSize * 1.2}
+        fontSize={fontSize * 1.3}
         color="#ffffff"
         font="/fonts/Beholden-Regular.ttf"
         anchorX="left"
@@ -62,14 +71,9 @@ const NewestBar = ({ position, viewportWidth }: NewestBarProps) => {
       </Text>
 
       {recentPosts.map((post, index) => (
-        <group key={post.id} position={[0, -4 * (index + 1), 0]}>
-          {/* Title (clickable) */}
-          <group
-            position={[-barWidth/2 + 2, 0, 0]}
-            onClick={() => handleClick(post.type, post.slug)}
-            onPointerOver={handlePointerEnter}
-            onPointerOut={handlePointerOut}
-          >
+        <group key={post.id} position={[0, -(isMobile ? 3 : 2.5) * (index + 1), 0]}>
+          {/* Post title with larger spacing for mobile */}
+          <group position={[-barWidth/2 + 2, 0, 0]}>
             <Text
               fontSize={fontSize}
               color="#ffffff"
@@ -81,11 +85,11 @@ const NewestBar = ({ position, viewportWidth }: NewestBarProps) => {
             </Text>
           </group>
 
-          {/* Date (non-clickable) */}
-          <group userData={{ disableRaycast: true }}>
+          {/* Date with adjusted size for mobile */}
+          <group>
             <Text
               position={[barWidth/2 - 2, 0, 0]}
-              fontSize={fontSize * 0.7}
+              fontSize={fontSize * 0.8}
               color="#999999"
               font="/fonts/Beholden-Italic.ttf"
               anchorX="right"

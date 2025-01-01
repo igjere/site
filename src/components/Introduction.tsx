@@ -3,11 +3,18 @@ import { Text } from '@react-three/drei'
 interface IntroductionProps {
   viewportWidth: number
   positionY: number
+  isMobile: boolean
 }
 
-const Introduction = ({ viewportWidth, positionY }: IntroductionProps) => {
-  const maxWidth = Math.min(viewportWidth * 0.8, 125)
-  const fontSize = Math.min(viewportWidth * 0.02, 1.8)
+const Introduction = ({ viewportWidth, positionY, isMobile }: IntroductionProps) => {
+  const maxWidth = isMobile 
+    ? Math.min(viewportWidth * 0.9, 100)
+    : Math.min(viewportWidth * 0.8, 125)
+  
+  const fontSize = isMobile
+    ? Math.min(viewportWidth * 0.05, 2.6)
+    : Math.min(viewportWidth * 0.025, 2.0)
+    
   const xPosition = -maxWidth / 2
 
   return (
@@ -20,6 +27,7 @@ const Introduction = ({ viewportWidth, positionY }: IntroductionProps) => {
         font="/fonts/Beholden-Regular.ttf"
         anchorX="left"
         lineHeight={1.5}
+        letterSpacing={0.02}
       >
         {`lockedinCEO.
 attempting to save the public perception of gen z software engineers one git commit at a time. 

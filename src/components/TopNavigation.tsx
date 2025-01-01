@@ -1,12 +1,14 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import SpiralHomeButton from './SpiralHomeButton'
+import { useResponsive } from '../hooks/useResponsive'
 
 const TopNavigation = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const path = location.pathname
   const [isScrolled, setIsScrolled] = useState(false)
+  const { isMobile } = useResponsive()
   const isHome = path === '/'
   
   useEffect(() => {
@@ -36,18 +38,16 @@ const TopNavigation = () => {
       top: 0,
       left: 0,
       right: 0,
-      padding: '1rem',
+      padding: isMobile ? '0.25rem' : '1rem',
       display: 'flex',
       alignItems: 'center',
+      justifyContent: 'center',
       zIndex: 10,
-      background: isScrolled 
-        ? isHome 
-          ? 'rgba(0, 0, 0, 0.8)' 
-          : 'rgba(20, 20, 20, 0.75)'
-        : 'transparent',
+      background: isScrolled ? 'rgba(0, 0, 0, 0.95)' : 'transparent',
       backdropFilter: isScrolled ? 'blur(10px)' : 'none',
       transition: 'all 0.3s ease',
-      borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.1)' : 'none'
+      borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
+      height: isMobile ? '3.5rem' : '4rem'
     }}>
       <SpiralHomeButton isScrolled={isScrolled} />
       
@@ -55,7 +55,15 @@ const TopNavigation = () => {
         flex: 1,
         display: 'flex',
         justifyContent: 'center',
-        gap: '2rem'
+        gap: isMobile ? '0.5rem' : '2rem',
+        maxWidth: isMobile ? 'calc(100% - 4rem)' : '800px',
+        margin: '0 auto',
+        overflow: 'auto',
+        msOverflowStyle: 'none',
+        scrollbarWidth: 'none',
+        '&::-webkit-scrollbar': {
+          display: 'none'
+        }
       }}>
         {navItems.map((item) => {
           const isActive = postType ? 
@@ -67,15 +75,16 @@ const TopNavigation = () => {
               key={item.path}
               onClick={() => navigate(item.path)}
               style={{
-                position: 'relative',
-                background: 'none',
-                border: 'none',
+                background: 'transparent',
+                border: '1px solid rgba(255, 255, 255, 0.8)',
                 color: '#fff',
                 fontFamily: 'Beholden-Regular',
-                fontSize: '1.2rem',
-                cursor: 'pointer',
-                padding: '0.5rem 1rem',
+                fontSize: isMobile ? '0.8rem' : '1.2rem',
+                padding: isMobile ? '0.15rem 0.35rem' : '0.5rem 1rem',
                 opacity: isActive ? 1 : 0.7,
+                whiteSpace: 'nowrap',
+                minWidth: 'fit-content',
+                cursor: 'pointer',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={e => {
@@ -87,16 +96,6 @@ const TopNavigation = () => {
                 }
               }}
             >
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                border: '1px solid #fff',
-                opacity: isActive ? 1 : 0,
-                transition: 'opacity 0.3s ease'
-              }} />
               {item.text}
             </button>
           )

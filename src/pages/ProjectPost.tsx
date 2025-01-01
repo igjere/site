@@ -4,43 +4,56 @@ import TopNavigation from '../components/TopNavigation'
 import { usePostsStore } from '../store/posts'
 import MarkdownContent from '../components/MarkdownContent'
 import { useScrollReset } from '../hooks/useScrollReset'
+import { useResponsive } from '../hooks/useResponsive'
 
 const ProjectPost = () => {
   useScrollReset()
   const { slug } = useParams()
+  const { isMobile } = useResponsive()
   const post = usePostsStore((state) => 
     state.posts.find(p => p.slug === slug && p.type === 'project')
   )
 
-  if (!post) return <div>Project not found</div>
+  if (!post) return null
 
   return (
     <PageWrapper>
       <TopNavigation />
       <div style={{ 
         width: '100%',
-        maxWidth: '900px',
+        maxWidth: isMobile ? 'calc(100% - 2rem)' : '800px',
         margin: '0 auto',
-        marginTop: '6rem',
-        paddingTop: '2rem',
-        padding: '0 2rem',
-        color: '#fff'
+        marginTop: isMobile ? '4rem' : '5rem',
+        padding: isMobile ? '1rem' : '2rem',
+        color: '#fff',
+        overflowX: 'hidden'
       }}>
-        <h1 style={{ textAlign: 'center', marginBottom: '1rem' }}>{post.title}</h1>
-        <p style={{ 
+        <h1 style={{ 
+          textAlign: 'center', 
+          marginBottom: '2rem',
+          fontSize: isMobile ? '1.75rem' : '2.5rem',
+          lineHeight: '1.2'
+        }}>{post.title}</h1>
+        
+        <div style={{ 
           textAlign: 'center',
-          fontStyle: 'italic',
           borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
           paddingBottom: '1rem',
-          marginBottom: '2rem'
+          marginBottom: '2rem',
+          fontSize: isMobile ? '0.9rem' : '1rem',
+          fontStyle: 'italic'
         }}>
-          Created: {post.createdAt.toLocaleString()}
+          Created: {new Date(post.createdAt).toLocaleString()}
           {post.modifiedAt > post.createdAt && 
-            ` (Modified: ${post.modifiedAt.toLocaleString()})`}
-        </p>
+            ` (Modified: ${new Date(post.modifiedAt).toLocaleString()})`}
+        </div>
+
         <div style={{ 
-          width: '100%',
-          maxWidth: '100%'
+          fontSize: isMobile ? '0.95rem' : '1.1rem',
+          lineHeight: '1.8',
+          letterSpacing: '0.02em',
+          maxWidth: isMobile ? '100%' : '90%',
+          margin: '0 auto'
         }}>
           <MarkdownContent content={post.content} />
         </div>

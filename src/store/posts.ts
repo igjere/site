@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import { Post } from '../types/Post'
-import matter from 'gray-matter'
 
 interface PostsStore {
   posts: Post[]
